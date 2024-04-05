@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="comments")
@@ -22,15 +23,19 @@ public class Comment {
     @Column(name="ts")
     private Date ts;
 
+    @NotBlank(message="Empty host")
     @Column(name="host")
     private String host;
 
+    @NotBlank(message="Empty path")
     @Column(name="path")
     private String path;
 
+    @NotBlank(message="Empty author")
     @Column(name="author")
     private String author;
 
+    @NotBlank(message="Empty content")
     @Column(name="content")
     private String content;
 
