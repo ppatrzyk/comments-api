@@ -13,13 +13,18 @@ Simple REST API that enables storing comments for any static site.
 
 ## Setup
 
-1. Run the service and note your `COMMENTS_API_ENDPOINT`
+1. Run the service
 
 It requires existing postgres database.
 
 ```
 docker run -d -e DB_ADDRESS=<POSTGRES_JDBC_URI> -e DB_USER=<USER> -e DB_PASS=<PASSWORD> pieca/comments-api:0.0.1
-docker run -d -e DB_ADDRESS=jdbc:postgresql://localhost:5432/comments_dev -e DB_USER=comments -e DB_PASS=comments pieca/comments-api:0.0.1
+```
+
+Or run docker compose for both comments-api and postgres:
+
+```
+docker-compose up -d
 ```
 
 2. Add the following under your `<head>`:
@@ -28,7 +33,7 @@ docker run -d -e DB_ADDRESS=jdbc:postgresql://localhost:5432/comments_dev -e DB_
 <script src="<COMMENTS_API_ENDPOINT>/comments-api.js"></script>
 ```
 
-3. Add the following within your `<body>` (of course, you can adjust [<template>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) as needed):
+3. Add the following within your `<body>` (of course, you can adjust [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) as needed):
 
 ```
     <!-- place this where the comments should appear -->

@@ -1,5 +1,4 @@
 function loadComments(apiURL, elementId) {
-    console.log("load ok")
     window.apiURL = apiURL;
     window.host = location.hostname;
     window.path = `/${location.pathname.replace(/(\/+$|^\/+)/g, "")}`;
@@ -22,18 +21,13 @@ function loadComments(apiURL, elementId) {
             comment.querySelector(".comments-api-comment-ts").textContent = el.ts;
             comment.querySelector(".comments-api-comment-content").textContent = el.content;
             comment.querySelector(".comments-api-comment-score").textContent = `Score: ${el.score} | Upvotes: ${el.upvotes} | Downvotes: ${el.downvotes}`;
-            comment.querySelectorAll(".comments-api-comment-vote").forEach(button => {
-                button.setAttribute("data-comment-id", el.id) 
-            });
+            comment.querySelectorAll(".comments-api-comment-vote").forEach(button => {button.setAttribute("data-comment-id", el.id)});
             commentsDiv.appendChild(comment);
         });
     })
-    .catch(function (err) {
-        console.error(err)
-    })
+    .catch(function (err) {console.error(err)})
     
-    var newComment = newCommentTemplate.content.cloneNode(true);
-    commentsDiv.appendChild(newComment);
+    commentsDiv.appendChild(newCommentTemplate.content.cloneNode(true));
 }
 
 function saveComment(button) {
@@ -51,12 +45,8 @@ function saveComment(button) {
         }
         return response.json();
     })
-    .then(_comment => {
-        window.location.reload(false);
-    })
-    .catch(function (err) {
-        console.error(err)
-    })
+    .then(_comment => {window.location.reload(false);})
+    .catch(function (err) {console.error(err)})
 }
 
 function vote(button, score) {
@@ -73,10 +63,6 @@ function vote(button, score) {
         }
         return response.json();
     })
-    .then(_comment => {
-        window.location.reload(false);
-    })
-    .catch(function (err) {
-        console.error(err)
-    })
+    .then(_comment => {window.location.reload(false);})
+    .catch(function (err) {console.error(err)})
 }
