@@ -35,7 +35,8 @@ public interface CommentRepository extends JpaRepository<Comment, UUID> {
             group by comment_id
         ) as vote_summary
         on comments.id = vote_summary.comment_id
-        where host = :host and path = :path ;
+        where host = :host and path = :path
+        order by ts desc;
             """, nativeQuery = true)
     List<CommentWithVote> findByHostAndPathWithVotes(@Param("host") String host, @Param("path") String path);
 }

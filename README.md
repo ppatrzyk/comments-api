@@ -9,13 +9,18 @@ Simple REST API that enables storing comments for any static site.
 | /api/comments | GET | host, path | | List comments at given host and path |
 | /api/comments | POST | | host, path, author, comment | Add new comment |
 | /api/comments | DELETE | id | | Delete comment |
-| /api/votes | POST | commentId, score | | Vote on given comment |
+| /api/votes | POST | | commentId, score | Vote on given comment |
 
 ## Setup
 
 1. Run the service and note your `COMMENTS_API_ENDPOINT`
 
-TODO docker instructions
+It requires existing postgres database.
+
+```
+docker run -d -e DB_ADDRESS=<POSTGRES_JDBC_URI> -e DB_USER=<USER> -e DB_PASS=<PASSWORD> pieca/comments-api:0.0.1
+docker run -d -e DB_ADDRESS=jdbc:postgresql://localhost:5432/comments_dev -e DB_USER=comments -e DB_PASS=comments pieca/comments-api:0.0.1
+```
 
 2. Add the following under your `<head>`:
 
