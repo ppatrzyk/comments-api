@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import me.patrzyk.comments.dao.CommentRepository;
+import me.patrzyk.comments.dao.VoteRepository;
 import me.patrzyk.comments.entity.Comment;
+import me.patrzyk.comments.entity.CommentWithVote;
+import me.patrzyk.comments.entity.Vote;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;
+    private VoteRepository voteRepository;
 
     @Override
     public List<Comment> getAllComments() {
@@ -22,18 +26,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getSiteComments(String host, String path) {
-        return commentRepository.findByHostAndPathOrderByTsDesc(host, path);
-    }
-
-    @Override
-    public Comment getComment(UUID id) {
-        Optional<Comment> result = commentRepository.findById(id);
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            throw new RuntimeException(String.format("Comment %s not found", id));
-        }
+    public List<CommentWithVote> getSiteComments(String host, String path) {
+        // return commentRepository.findByHostAndPathOrderByTsDesc(host, path);
+        return commentRepository.findByHostAndPathWithVotes(host, path);
     }
 
     @Transactional
@@ -48,9 +43,16 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(id);
     }
 
+    @Transactional
+    @Override
+    public Vote saveVote(Vote vote) {
+        return voteRepository.save(vote);
+    }
+
     @Autowired
-    public CommentServiceImpl(CommentRepository CommentRepository) {
+    public CommentServiceImpl(CommentRepository CommentRepository, VoteRepository voteRepository) {
         this.commentRepository = CommentRepository;
+        this.voteRepository = voteRepository;
     }
     
 }
